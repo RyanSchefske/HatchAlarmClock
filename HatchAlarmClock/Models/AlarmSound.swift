@@ -9,17 +9,16 @@ import Foundation
 
 enum AlarmSound: String, Codable {
     case party
-    case brownNoise
+    case brownNoise = "brown-noise"
     case ocean
-    case whiteNoise
+    case whiteNoise = "white-noise"
     
     var soundFile: String {
-        return "\(self.rawValue).wav"
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case party, ocean
-        case brownNoise = "brown-noise"
-        case whiteNoise = "white-noise"
+        switch self {
+        case .party: return "party.wav"
+        case .brownNoise: return "brownNoise.wav"
+        case .ocean: return "ocean.wav"
+        case .whiteNoise: return "whiteNoise.wav"
+        }
     }
 }

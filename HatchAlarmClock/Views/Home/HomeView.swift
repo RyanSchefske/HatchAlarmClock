@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var viewModel = HomeViewModel()
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -16,6 +18,14 @@ struct HomeView: View {
             Text("Hello, world!")
         }
         .padding()
+        .task {
+            do {
+                try await viewModel.fetchAlarms()
+            } catch {
+                // TODO: Surface errors to user
+                print("Error: \(error)")
+            }
+        }
     }
 }
 
