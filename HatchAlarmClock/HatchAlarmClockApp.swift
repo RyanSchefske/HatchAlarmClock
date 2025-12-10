@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct HatchAlarmClockApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             HomeView()

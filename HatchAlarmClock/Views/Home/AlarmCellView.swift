@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AlarmCellView: View {
     @Binding var alarm: HatchAlarm
+    var didToggleAlarm: () -> Void
     
     var body: some View {
         HStack {
@@ -19,13 +20,14 @@ struct AlarmCellView: View {
                 HStack {
                     if alarm.recurring == .never {
                         Text(alarm.date.toDateString())
+                    } else {
+                        Text(alarm.recurring.displayString)
                     }
                     
                     if alarm.savedFromServer {
                         Text("•")
-                        Label {
+                        HStack {
                             Text("Saved")
-                        } icon: {
                             Image(systemName: "checkmark.icloud")
                         }
                     }
@@ -37,11 +39,12 @@ struct AlarmCellView: View {
             Spacer()
             
             Toggle(isOn: $alarm.isOn) { }
+                .onChange(of: alarm.isOn) { didToggleAlarm() }
         }
         .padding()
     }
 }
 
 #Preview {
-    AlarmCellView(alarm: .constant(.mock))
+    AlarmCellView(alarm: .constant(.mock)) {}
 }

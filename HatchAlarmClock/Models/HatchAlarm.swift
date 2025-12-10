@@ -42,5 +42,5 @@ struct HatchAlarm: Identifiable, Codable {
 }
 
 extension HatchAlarm {
-    static var mock = HatchAlarm(isOn: false, date: .now, sound: .ocean, recurring: .never, allowsSnooze: false, savedFromServer: true)
+    static var mock = HatchAlarm(isOn: false, date: .now, sound: .ocean, recurring: .daily, allowsSnooze: false, savedFromServer: true)
 }
