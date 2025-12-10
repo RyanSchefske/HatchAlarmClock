@@ -25,7 +25,15 @@ final class HomeViewModel {
             alarm.savedFromServer = true
             return alarm
         }
-        self.alarms = newAlarms
+        var uniqueAlarms: [HatchAlarm] = []
+        for alarm in newAlarms {
+            if uniqueAlarms.contains(where: { $0 == alarm }) {
+                break
+            } else {
+                uniqueAlarms.append(alarm)
+            }
+        }
+        self.alarms = uniqueAlarms.sorted(by: <)
         isLoading = false
     }
     

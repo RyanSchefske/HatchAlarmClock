@@ -19,4 +19,12 @@ extension Date {
         dateFormatter.dateFormat = "MMM d, YYYY"
         return dateFormatter.string(from: self)
     }
+    
+    func hours() -> Int {
+        Calendar.current.component(.hour, from: self)
+    }
+    
+    func minutes() -> Int {
+        Calendar.current.component(.minute, from: self)
+    }
 }

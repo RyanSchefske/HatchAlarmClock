@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HatchAlarm: Identifiable, Codable {
+struct HatchAlarm: Identifiable, Codable, Hashable {
     var id = UUID()
     var isOn: Bool
     var date: Date
@@ -38,6 +38,24 @@ struct HatchAlarm: Identifiable, Codable {
         self.recurring = serverAlarm.recurring
         self.allowsSnooze = false
         self.savedFromServer = true
+    }
+}
+
+extension HatchAlarm: Equatable {
+    static func == (lhs: HatchAlarm, rhs: HatchAlarm) -> Bool {
+        return lhs.date == rhs.date && lhs.recurring == rhs.recurring
+    }
+}
+
+extension HatchAlarm: Comparable {
+    static func < (lhs: HatchAlarm, rhs: HatchAlarm) -> Bool {
+        if lhs.date.hours() < rhs.date.hours() {
+            return true
+        } else if lhs.date.hours() == rhs.date.hours() {
+            return lhs.date.minutes() < rhs.date.minutes()
+        } else {
+            return false
+        }
     }
 }
 

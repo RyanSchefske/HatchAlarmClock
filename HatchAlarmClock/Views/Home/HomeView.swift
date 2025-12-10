@@ -49,6 +49,7 @@ struct HomeView: View {
             .sheet(isPresented: $viewModel.showingAddAlarmView) {
                 AddAlarmView { alarm in
                     viewModel.alarms.append(alarm)
+                    viewModel.alarms.sort()
                     viewModel.setAlarm(alarm)
                 }
             }
