@@ -11,7 +11,7 @@ import SwiftUI
 struct HatchAlarmClockApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
