@@ -15,8 +15,15 @@ class HomeViewModel {
     var isLoading = false
     
     func fetchAlarms() async throws {
+        isLoading = true
         let url = URL(string: "https://671267816c5f5ced6623613b.mockapi.io/alarms")!
-        let alarms: [ServerAlarm] = try await networkManager.performRequest(url: url, httpMethod: .GET)
-        self.alarms = alarms.map { HatchAlarm(serverAlarm: $0) }
+        var serverAlarms: [ServerAlarm] = try await networkManager.performRequest(url: url, httpMethod: .GET)
+        let newAlarms = serverAlarms.map { oldAlarm -> HatchAlarm in
+            var alarm = HatchAlarm(serverAlarm: oldAlarm)
+            alarm.savedFromServer = true
+            return alarm
+        }
+        self.alarms = newAlarms
+        isLoading = false
     }
 }

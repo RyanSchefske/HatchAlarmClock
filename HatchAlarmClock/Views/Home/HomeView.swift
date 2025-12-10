@@ -11,19 +11,26 @@ struct HomeView: View {
     @State private var viewModel = HomeViewModel()
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        List($viewModel.alarms) { $alarm in
+            AlarmCellView(alarm: $alarm)
         }
-        .padding()
         .task {
             do {
                 try await viewModel.fetchAlarms()
             } catch {
                 // TODO: Surface errors to user
                 print("Error: \(error)")
+            }
+        }
+        .overlay {
+            if viewModel.isLoading {
+                ZStack {
+                    ProgressView()
+                        .tint(.blue)
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundStyle(Color.secondary.opacity(0.4))
+                        .padding()
+                }
             }
         }
     }
